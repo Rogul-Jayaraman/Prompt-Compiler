@@ -15,16 +15,29 @@ Loading conditions: extracting intent from a request; any non-English, romanized
 | `requirements` | Stated functional and non-functional requirements |
 | `constraints` | Boundaries — stack, budget, format, permissions, deadlines |
 | `exclusions` | What must not be included or done |
+| `context` | Relevant conversation, project, or domain information |
 | `preferences` | Output language, depth, format |
 | `environment` | Target agent and its known limitations |
 | `evidence[]` | Discovered facts — see `project-discovery.md` |
 | `assumptions[]` | Unconfirmed, with the impact if wrong |
 | `open_questions[]` | Material ambiguities still unresolved |
 | `conflicts[]` | Requirements that cannot all hold |
+| `workstreams[]` | Distinct parts of the task and their dependencies, when needed |
+| `acceptance_criteria[]` | Observable completion conditions, when useful |
 
 Not every field needs filling. "Rewrite this sentence professionally" needs an objective and nothing else.
 
 **Do not invent requirements to fill an empty field.** An empty field is information.
+
+**Identify what is actually being asked for.** Three different things, and they need different outputs:
+
+| The user wants | You produce |
+|---|---|
+| A prompt | The compiled prompt. The default. |
+| A prompt plus an explanation of your choices | Both. Give the reasoning briefly. |
+| The task itself done | The prompt, and say that executing it is outside what this skill does. Do not do it. |
+
+Most requests are the first row and need no question about it.
 
 ---
 

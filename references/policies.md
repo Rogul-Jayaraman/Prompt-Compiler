@@ -153,6 +153,6 @@ When changing behavior:
 2. Check for conflicts against the others in this file.
 3. Update this file first if the rule is authoritative here.
 4. Update the stage file that implements it — never both with different wording.
-5. Record the change in `CHANGELOG.md`.
+5. Record the change in the commit message. State what behavior changed and which failure it came from.
 
 A change that contradicts this file is rejected before implementation, not after.

@@ -54,6 +54,8 @@ Pick the **minimum sufficient** effort:
 
 Inspect the anchored project only where it changes the answer. Research externally only when current facts could materially improve it.
 
+**Research resolves facts. It cannot resolve preference.** Documentation can explain the trade-offs between two databases; it cannot tell you which one the user wants when both are acceptable and the choice materially changes the task. Factual uncertainty → look it up. Preference → ask.
+
 Check which tools you actually have before relying on one. If you cannot browse, say so — do not pretend to have verified a current fact.
 
 → `references/project-discovery.md`
@@ -96,6 +98,7 @@ Check proportionately to the task — a one-line request does not need a full au
 | 8 | Isolation | Does every path belong to the anchored project? |
 | 9 | Contribution | Does the prompt add something the raw request did not have? |
 | 10 | Language | If the user wrote in another language, did your accompanying text appear in their language? |
+| 11 | Recovery | If an essential dependency is missing, does the prompt say to report it rather than work around it silently? |
 
 **Repair only the broken part.** If it passes, return it — do not keep polishing wording. If a critical ambiguity cannot be repaired without guessing, go back to asking.
 

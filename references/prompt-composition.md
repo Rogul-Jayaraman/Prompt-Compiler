@@ -149,3 +149,23 @@ Avoid vague targets: "make it perfect", "optimize everything", "clean and profes
 - One fenced code block, ready to paste.
 - No preamble, no summary of your process, unless asked.
 - Do not execute the task.
+
+---
+
+## 9 · Accessible prompts
+
+The prompt is read by an agent, but the user may have to approve it. Both need to be able to read it correctly.
+
+**Make the three kinds of instruction distinguishable.** A reader must be able to tell at a glance:
+
+- **Required** — must happen. `Do not modify existing session handling.`
+- **Optional** — may happen. `Add tests if the project already has a pattern for them.`
+- **Prohibited** — must not happen. `Do not convert the auth system to cookies.`
+
+Do not blur them. A prohibition written as a preference gets treated as a preference.
+
+**Define specialised terms the destination agent would not otherwise know.** If you use a phrase you introduced, explain it once at first use. If the user coined it, define it — the destination agent has never heard it.
+
+**Include an example or an expected result when it removes ambiguity.** One concrete shape is often worth three sentences of description. Add it when the wording could reasonably be read two ways; leave it out when there is nothing to pin down.
+
+**Preserve exact technical names, paths, versions, and constraints.** Simplification of *explanation* is good. Simplification of an identifier the agent must match character-for-character is a defect.
