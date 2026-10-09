@@ -118,6 +118,8 @@ Load only when the stage is actually reached.
 | `references/clarification-and-conflicts.md` | Before asking anything, or when requirements conflict |
 | `references/prompt-composition.md` | Writing the prompt |
 | `assets/project-template.md` | The user wants a `.agents/prompt-compiler/project.md` file |
+| `examples/project-dependent-task.md` | Unsure how much investigation a task needs, or what a good ask looks like |
+| `examples/multilingual-request.md` | Handling non-English, romanized, or mixed-language input |
 | `tests/project-identification.md` | Checking cross-project isolation before returning |
 
 ## Non-goals
