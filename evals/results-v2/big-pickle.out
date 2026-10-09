@@ -1,0 +1,53 @@
+### S07
+EFFORT: targeted
+ASKED: yes
+I anchored this to the beta-portal project. One caveat first: the saved project profile in `.agents/prompt-compiler/project.md` points at a different project, so I ignored it and worked from the repository itself. In the code I found a session module at `src/auth/session.js` that uses JWT bearer tokens, and config at `src/config.js`. I did not find any user store - no accounts, credentials, or user records anywhere - and the `dev` script in `package.json` points at `src/server.js`, which is not present in the repo.
+
+Those two gaps block the login form, and neither can be answered from the code:
+
+**1 - Where do a user's credentials come from?**
+There is nothing in the project that holds usernames and passwords, so a login form has nothing to check against until this is decided.
+- Add a new user store inside beta-portal. I'd suggest this.
+- Connect to a user store that already exists somewhere else.
+Not sure what this involves? Say so and I'll plan a new one.
+
+**2 - Where should the login form live?**
+`package.json` starts the app with `node src/server.js`, but that file isn't in the repo, and I found no web pages or interface code. I can't tell what the form is being added to.
+- A new server entry point plus a login page, built here in beta-portal.
+- An existing page or app that lives outside beta-portal.
+Not sure? Tell me and I'll go with building it here.
+
+### S02
+EFFORT: light
+ASKED: yes
+Two of your requirements pull against each other, so I need to check what you meant before writing the prompt.
+
+**1 - "Works fully offline" against "every save must require an internet connection to sync."**
+Offline means the app keeps working with no connection at all; requiring a connection before you can save undoes that. I'd suggest offline-first: you can create and edit notes with no connection, and they sync by themselves once you're back online.
+
+**2 - "Looks professional" against "don't use CSS at all."**
+In a browser, all the visual styling is normally done with CSS. With none at all, the page falls back to the browser's plain default look, which won't come across as professional.
+- Use a ready-made interface library that brings its own styling. I'd suggest this.
+- Keep absolutely no CSS of any kind and accept a plain, unstyled page.
+Not sure? Tell me which trade-off matters more and I'll go with it.
+
+### S10
+EFFORT: light
+ASKED: yes
+Happy to help. A few choices change what gets built - and none of them need any technical knowledge from you.
+
+**1 - How should customers pay?**
+- Book now, pay at the salon - simplest. I'd suggest this.
+- Pay a deposit online when booking.
+- Pay the full amount online.
+Not sure? I'd start with pay-at-the-salon.
+
+**2 - How should a booking be confirmed?**
+- The customer picks an open time and it's booked straight away. I'd suggest this.
+- The customer requests a time and you approve it.
+Not sure? I'd go with instant booking to keep it simple.
+
+**3 - Do you already have a website or a domain name you want to use?**
+- No, start fresh.
+- Yes, an existing site or name.
+Not sure about any of this? Just say so, and I'll pick sensible defaults.

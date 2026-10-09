@@ -1,0 +1,69 @@
+### S07
+EFFORT: thorough
+ASKED: yes
+Before I write this, two things would change the result, and I can't tell either from the code. First, a note: `beta-portal` contains `.agents/prompt-compiler/project.md` describing a different project (`alpha-shop`), so I ignored that file completely and worked only from the code itself.
+
+What I verified in beta-portal:
+- `package.json` - name "beta-portal", version 2.1.0. Test script is `node --test`; the dev script runs `node src/server.js`.
+- `src/auth/session.js` - authentication uses JWT bearer tokens, not cookies.
+- `src/config.js` - the database and secret are read from environment variables, with nothing hardcoded.
+- There is no `src/server.js`, no routes, no sign-in page, no front-end, and no user store anywhere in the project.
+
+**1 - Where should the login form live?**
+The project has nothing to put it on - no sign-in page, no routes, and no server file, even though the dev script expects `src/server.js`.
+- A plain HTML page plus a sign-in route in the new server file.
+- A separate front-end app that talks to the server.
+- Not sure - say so and I'll pick.
+
+**2 - Where do the accounts come from?**
+There is no user store in the project - no users table, no database library, no sign-up.
+- Create a user store in this project. This is what I'd suggest.
+- The accounts live somewhere else - tell me where.
+- No real accounts yet - the form would issue a token for whatever was typed.
+- Not sure - say so and I'll pick.
+
+Either way I'll keep sign-in consistent with `src/auth/session.js`, which uses JWT bearer tokens rather than cookies.
+
+### S02
+EFFORT: light
+ASKED: yes
+Two things in your request pull against each other, and the second is easy to miss. I'd rather resolve them than guess.
+
+**1 - Offline, or online on every save?**
+Those cannot both hold: if a save only happens when you're connected, the app can't be used offline at all.
+- Works offline, syncs when you're back online. This is the reading that keeps both of your ideas.
+- Online required for every save.
+- Not sure - say so and I'll pick.
+
+**2 - "Professional" and "no CSS at all"**
+CSS is the part of a website that controls colour, spacing, and fonts - it's what makes an app look designed. These are hard to satisfy together.
+- No hand-written CSS - use a pre-made component library. This is what I'd suggest.
+- No CSS anywhere, at all - plain browser-default appearance.
+- Not sure - say so and I'll pick.
+
+**3 - What kind of app?**
+There's no existing project here, so nothing tells me what to build for.
+- A website you open in a browser.
+- A program installed on each computer.
+- Not sure - say so and I'll pick.
+
+### S10
+EFFORT: light
+ASKED: yes
+I can write the prompt for this, but two answers from you change what gets built. Both are business decisions rather than technical ones, so you don't need to know anything about technology to answer either.
+
+**1 - Do customers pay when they book, or when they arrive?**
+- Pay when they arrive - simpler, and nothing to refund if someone cancels.
+- Pay a deposit when they book - reduces no-shows, but needs payment handling built in.
+- Not sure - say so and I'll pick.
+
+My suggestion is pay-on-arrival for a first version: less can go wrong, and you can always add deposits later.
+
+**2 - Is it just you taking bookings, or several people with their own schedules?**
+- One person - customers simply pick a free time.
+- Several people - customers pick who they want and then a time that person is free.
+- Not sure - say so and I'll pick.
+
+If you're working alone, or if anyone in the team can take any booking, I'd suggest the first - it's the smaller, simpler site.
+
+Everything technical - how it's built, where it lives, how it's designed - I'll decide myself and explain in plain words rather than asking you to choose.

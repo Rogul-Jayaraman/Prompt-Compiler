@@ -1,0 +1,48 @@
+### S07
+EFFORT: targeted
+ASKED: yes
+I looked at the beta-portal project (package.json, src/config.js, src/auth/session.js) before asking. Three things are missing that a login form cannot work without, so I need your answers first:
+
+1. I could not find any user accounts or password storage anywhere in beta-portal. Where should login credentials come from and be stored?
+- Create a user store in this repo. The config (src/config.js) already reads a DATABASE_URL from the environment.
+- Check credentials against an external service or system you already run.
+I recommend creating the user store in this repo, since the database connection is already plumbed. Or say "I'm not sure - you choose."
+
+2. The dev script in package.json runs "node src/server.js", but src/server.js does not exist. The auth code is set up for JWT bearer tokens, not browser cookies. Should a new backend be built in this repo, or is the login form meant for an existing external service?
+I recommend building the backend in this repo, since package.json already expects src/server.js. Or say "I'm not sure - you choose."
+
+3. There is no existing UI in beta-portal. What should the login form be built with?
+I recommend a plain HTML form served by the new backend - it matches the repo's minimal Node setup and adds no new dependency. Or say "I'm not sure - you choose."
+
+### S02
+EFFORT: light
+ASKED: yes
+This request contains two pairs of requirements that cannot both hold, and one missing decision. Please answer all three:
+
+1. You said the app must work fully offline, and also that every save must require an internet connection to sync. Which did you mean?
+- Fully offline: the app works with no internet, saves are kept locally, and notes sync when a connection is available.
+- Always online: every save needs an internet connection.
+I recommend fully offline with sync when connected. Or say "I'm not sure - you choose."
+
+2. You want the app to look professional, but with no CSS at all. CSS is what styles a web page - with none at all, you get the browser's plain default look. Did you mean:
+- No CSS frameworks or separate stylesheet files, but a small amount of built-in styling is fine.
+- Truly zero CSS of any kind, and you accept the plain default look.
+- Something else.
+I recommend the first. Or say "I'm not sure - you choose."
+
+3. What should this be - a website, a desktop app, or a phone app?
+I recommend a website. Or say "I'm not sure - you choose."
+
+### S10
+EFFORT: thorough
+ASKED: yes
+No problem at all about the technology part - I'll keep everything plain. Three decisions change the whole build, so please answer these:
+
+1. Should customers be able to book appointments themselves on the site, or should the site mainly show your services and contact details?
+I recommend online booking, since that is what a booking website is for. Or say "I'm not sure - you choose."
+
+2. How should your appointment calendar work - should the site keep its own calendar that you update, or should it sync with a calendar you already use?
+I recommend the site keeping its own calendar to start. Or say "I'm not sure - you choose."
+
+3. Should customers pay online when they book, or should booking be free and customers pay you at the salon?
+I recommend no online payments to start. Or say "I'm not sure - you choose."
