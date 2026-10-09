@@ -25,7 +25,7 @@ $queries = @(
   @{ n = 5;  split = "TRAIN"; want = "LOAD"; q = "என் project-க்கு ஒரு prompt எழுதுங்கள்" },
   @{ n = 6;  split = "TRAIN"; want = "LOAD"; q = "I'm not sure how to word this for an AI to fix my login bug. Can you write it for me?" },
   @{ n = 7;  split = "TRAIN"; want = "LOAD"; q = "Make this vague request into something precise: add caching everywhere" },
-  @{ n = 8;  split = "TRAIN"; want = "LOAD"; q = "Add rate limiting to the API" },
+  @{ n = 8;  split = "TRAIN"; want = "SKIP"; q = "Add rate limiting to the API" },
   @{ n = 9;  split = "TRAIN"; want = "SKIP"; q = "Write a prompt for Stable Diffusion: a watercolor mountain landscape" },
   @{ n = 10; split = "TRAIN"; want = "SKIP"; q = "Improve the system prompt in src/prompt.ts" },
   @{ n = 11; split = "TRAIN"; want = "SKIP"; q = "Rate limiting: should I use Redis or in-memory?" },
@@ -41,7 +41,7 @@ $queries = @(
 )
 
 if (-not (Test-Path $File)) { Write-Error "No response file: $File" }
-$raw = Get-Content $File
+$raw = Get-Content $File -Encoding UTF8
 
 $got = @{}
 foreach ($line in $raw) {

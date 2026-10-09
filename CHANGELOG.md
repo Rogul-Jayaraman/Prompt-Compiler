@@ -5,6 +5,50 @@ Versions follow [semantic versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.4] — 2026-10-09
+
+### Fixed
+- **The hard stop fired on conflicts but not on material unknowns.** Two models compiled
+  past *"add a login form to an app with no user store and no server"*, hedging with
+  *"if there is no user store, report that instead."* That defers a guess to the far end
+  of the workflow, where it is harder to see. `SKILL.md` now names the four tells of a
+  deferred guess, and a missing dependency is an explicit ask trigger.
+  Validated at 100% across `big-pickle`, `step-5` and `ling-3.1-flash`.
+- **Trigger over-fire on direct tasks.** The description ended with *"Not for executing
+  the task itself"*, which lost to the leading positive phrasing. One model in two read
+  *"Add rate limiting to the API"* as a trigger — the exact kind of task this skill
+  writes prompts *for*. The exclusion is now promoted and names the trap directly.
+  Trigger accuracy went from 19/20 to **40/40** across both models on both splits.
+
+### Known limitations
+- **Single trial per scenario.** `pass^k` is designed for and never run at k>1.
+- **No with-skill vs without-skill baseline.** It remains unmeasured whether this skill
+  beats simply asking the destination agent directly. That is the claim a user would
+  actually care about.
+- **Mid-tier models only.** No frontier model tested. `nemotron-3.5-lightning-free`
+  could not be scored — it returned prose summaries instead of the required output
+  format, twice.
+- **Results were hand-transcribed.** Two transcription errors were caught (a Tamil
+  codepoint, and dropped lines that made a correct output look like a failure). A
+  harness with a human in the capture path is not a harness.
+
+## [0.1.3] — 2026-10-09
+
+### Added
+- `SECURITY.md`, `CONTRIBUTING.md`, `references/web-research.md`.
+- `evals/` — deterministic evaluation harness. No LLM-as-judge on the primary path,
+  following SkillsBench design guidance (arXiv:2602.12670).
+- `evals/triggers.ps1` — trigger accuracy with a 60/40 train-test split, so the
+  description is never scored against queries it was tuned on.
+
+### Added (spec gaps)
+- Effort is revisable. Escalate or reduce as evidence changes.
+- Explain any unrecognised term at first use.
+- Never imply the user must understand the technology to decide validly.
+
+### Fixed
+- `policies.md` pointed at `CHANGELOG.md`, which did not exist.
+
 ## [0.1.2] — 2026-10-09
 
 ### Added

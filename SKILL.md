@@ -1,6 +1,6 @@
 ---
 name: prompt-compiler
-description: Compiles a vague, underspecified, or conflicting request into one execution-ready prompt for a coding agent that works in the user's codebase. Anchors to the right project, investigates only when it helps, and asks the small number of questions that actually change the result — each explained in plain language with a recommendation. Use when the user says "write a prompt for", "help me ask an AI to", "compile this request", "turn this into a prompt", or describes a task they want to hand to another AI agent. Also use when a request is too ambiguous to act on and the real need is a well-formed ask. Not for executing the task itself.
+description: Compiles a vague, underspecified, or conflicting request into one execution-ready prompt for a coding agent working in the user's codebase. Anchors to the right project, investigates only when it helps, and asks only the questions that change the result. Use when the user wants a PROMPT FOR AN AI AGENT — "write a prompt for...", "help me ask an AI to...", "compile this request", "turn this into a prompt", or a request too vague to act on where the real need is a well-formed ask. Do NOT use when the user wants the work done now — "add rate limiting to the API", "refactor src/auth", "fix the failing test" — even though this skill writes prompts for exactly those tasks.
 license: MIT
 metadata:
   version: "0.1.3"
