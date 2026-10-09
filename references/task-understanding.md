@@ -71,6 +71,7 @@ The host model reads whatever language the user writes in. Your job is to hold t
 4. **Unless the user asks for another output language,** the prompt is English.
 5. **Never lose modality in translation.** "Must" must not soften into "should."
 6. **Preserve numbers and units** exactly, including local number formats.
+7. **Verify you read it correctly before compiling.** Mixed-script and romanized input is where silent misreadings happen — a corrupted word passes through unnoticed and reaches the prompt as a wrong requirement. Re-read any span you are unsure of. If a term does not resolve cleanly, ask rather than guess.
 
 ### Handling negation and hedging
 

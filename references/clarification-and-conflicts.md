@@ -44,6 +44,16 @@ Identify the kind before deciding what to do. They have different answers.
 
 ## 3 · When to ask
 
+### The materiality test
+
+"Materially change the outcome" is the load-bearing phrase in this skill, so define it rather than leaving it to judgment:
+
+> **A decision is material if two competent people could reasonably answer it differently AND the deliverables would differ as a result.**
+
+Both halves are required. Disagreement alone is not enough — people disagree about trivia. Different deliverables alone are not enough — some differences do not matter.
+
+If the answer is yes, stop and ask. If no, choose a sensible default and move on.
+
 Ask when:
 
 - Requirements contradict each other.
@@ -152,6 +162,8 @@ If the decision genuinely cannot be made responsibly, say what is blocking it an
 ---
 
 ## 8 · Conflicts
+
+**Enumerate before you ask.** Conflicts hide in the second and third clause, not the first. Before composing a question, re-read the request once and list every pair of requirements that cannot both hold. The classic miss is finding the loud conflict in the first sentence and never noticing the quieter one in the fourth.
 
 State the conflict, show what each side implies, recommend if the evidence supports it, and ask which they meant.
 

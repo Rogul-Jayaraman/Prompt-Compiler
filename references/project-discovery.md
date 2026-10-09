@@ -104,9 +104,10 @@ If the task record contains any path outside the anchor root, **stop and ask.** 
 
 1. Read it **after** anchoring, not before. It may describe a different project than the one you just resolved.
 2. Confirm `project_root` in the file matches your anchor. If it does not, **ignore the file entirely** and flag the mismatch.
-3. Use it to skip re-derivation, not to replace looking.
-4. **Verify the expensive claims.** If it says the test command is `npm test`, confirm that script exists in `package.json` before repeating it into a prompt. A stale command in the prompt is worse than no command — the destination agent will run it and report a false failure.
-5. Check `last_verified`. If it is older than recent commits touching the areas it describes, treat it as unverified.
+3. On a mismatch, discard **every** claim in it, not just the obvious ones. The common failure is rejecting the file and still carrying one of its facts forward, because that fact also happens to be plausible for the accepted project. Before returning, walk the rejected file claim by claim and confirm none of them appear in your output.
+4. Use it to skip re-derivation, not to replace looking.
+5. **Verify the expensive claims.** If it says the test command is `npm test`, confirm that script exists in `package.json` before repeating it into a prompt. A stale command in the prompt is worse than no command — the destination agent will run it and report a false failure.
+6. Check `last_verified`. If it is older than recent commits touching the areas it describes, treat it as unverified.
 
 ### Rules
 

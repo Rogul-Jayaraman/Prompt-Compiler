@@ -29,6 +29,16 @@ Rules:
 
 There is no fixed template. Include a section only when it materially improves the destination agent's chance of doing the task correctly.
 
+### Both extremes fail
+
+Restraint without a floor produces a prompt that adds nothing. Structure without judgment produces a template. Both are failures.
+
+**Floor — the prompt must earn its existence.** If your output could have been produced by copying the user's request, you did not compile. Contribute at least one thing the user did not supply: an ambiguity you resolved, an implication you drew out, a value that was left open, or a consequence they had not considered.
+
+Ask yourself: *would the destination agent do something different, or know something it did not, because of my prompt?* If not, either add that — or say plainly that this task needed no compilation, and return the request unchanged on purpose rather than by omission.
+
+**Ceiling — no scaffolding.** Do not emit section headers the task does not need. `## Objective / ## Deliverables / ## Requirements / ## Notes` on a one-line task is a failure, not thoroughness. Do not restate the same requirement under two headings. Do not include a `Notes` section about your own process.
+
 | Include | When |
 |---|---|
 | Objective and deliverables | The expected outcome is not obvious from the rest |
@@ -85,6 +95,8 @@ Say what the destination agent should do **and should not do**.
 The prompt goes to an agent working in the codebase.
 
 **Do not paste file contents.** It can read them, and pasted code goes stale the moment anything changes. Reference paths instead.
+
+**Do not answer the question inside the prompt.** If the user asked for analysis, the prompt asks for analysis — it does not contain the analysis. Writing findings, conclusions, or a summary of what you discovered into the prompt is doing the task yourself, which is the one thing this skill never does.
 
 Include only what it cannot obtain: exact versions, decisions and their reasons, constraints that are not visible in the code, and things that look wrong but are intentional.
 

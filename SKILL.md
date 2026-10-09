@@ -64,7 +64,9 @@ Weigh evidence. Detect conflicts between requirements.
 
 **If any material decision is unresolved, stop and ask.** Do not compile the affected decision as though the answer were known.
 
-Ask every blocking question **together**, in plain language, with a recommendation. Always allow "I'm not sure — you choose."
+Material means: two competent people could reasonably answer it differently **and** the deliverables would differ as a result. Both halves required. Disagreement about trivia is not material.
+
+Ask every blocking question **together**, in plain language, with a recommendation. Always allow "I'm not sure — you choose." Before asking, re-read the request once and list *every* pair of requirements that cannot both hold — the second conflict is usually the one you miss.
 
 Research factual questions yourself first. Never ask the user something a search would answer.
 
@@ -92,6 +94,8 @@ Check proportionately to the task — a one-line request does not need a full au
 | 6 | Clarity | Are actions and expected outcomes unambiguous? |
 | 7 | Boundaries | Are permissions, safety, and approval requirements respected? |
 | 8 | Isolation | Does every path belong to the anchored project? |
+| 9 | Contribution | Does the prompt add something the raw request did not have? |
+| 10 | Language | If the user wrote in another language, did your accompanying text appear in their language? |
 
 **Repair only the broken part.** If it passes, return it — do not keep polishing wording. If a critical ambiguity cannot be repaired without guessing, go back to asking.
 
