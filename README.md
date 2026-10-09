@@ -8,10 +8,29 @@ Ask only the questions that change the result. Show your work. Never guess quiet
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-8A2BE2)](https://agentskills.io)
+[![v0.1.4](https://img.shields.io/badge/version-0.1.4-informational)](CHANGELOG.md)
 
 </div>
 
 ---
+
+## Table of contents
+
+- [The problem](#the-problem)
+- [Install](#install)
+- [What it looks like](#what-it-looks-like)
+- [How it works](#how-it-works)
+- [Use cases](#use-cases)
+- [What the research says](#what-the-research-says)
+- [Compared to alternatives](#compared-to-alternatives)
+- [Speaks your language](#speaks-your-language)
+- [Teach it your project](#optional-teach-it-your-project)
+- [Honest limitations](#honest-limitations)
+- [What's measured](#whats-measured)
+- [FAQ](#faq)
+- [Troubleshooting](#troubleshooting)
+- [Layout](#layout)
+- [Contributing](#contributing)
 
 ## The problem
 
@@ -112,10 +131,58 @@ authoritative rule owner. Everything else links to it.
 
 ---
 
+## Use cases
+
+| If you are… | Prompt Compiler helps when |
+|---|---|
+| A **developer** | Handing a multi-file change to an agent without hand-writing every constraint |
+| A **product manager** | Turning a feature idea into something an agent can build from without a round trip |
+| A **technical writer** | Getting a structured, grounded starting point that cites real code |
+| A **researcher** | Clarifying a vague question before it becomes a confident wrong answer |
+| Anyone **non-technical** | Describing a problem in plain language and understanding what gets asked back |
+
+---
+
+## What the research says
+
+Every rule here came from a measurement, not a preference.
+
+| Finding | Source | What it changed |
+|---|---|---|
+| Asking recovers **~15 of the 16 points** that underspecification costs a coding agent | [Ask or Assume? Uncertainty-Aware Clarification-Seeking in Coding Agents (arXiv:2603.26233)](https://arxiv.org/abs/2603.26233) | Made asking a **hard stop**, not one stage among five |
+| A heavily constrained prompt scored **identically to no prompt at all** on a strong model | [You Don't Need Prompt Engineering Anymore: The Prompting Inversion (arXiv:2510.22251)](https://arxiv.org/abs/2510.22251) | Rule 1 — **default-deny** on added constraints |
+| **45% spread** between best and worst phrasing, unpredictable and non-transferable across models | [On the Worst Prompt Performance of Large Language Models (arXiv:2406.10248)](https://arxiv.org/abs/2406.10248) | Why this repo **does not claim to optimise phrasing** |
+| Shorter prompts generally perform **worse**, not better | [IFEval: Verifiable Instruction Following (arXiv:2311.07911)](https://arxiv.org/abs/2311.07911) | Removed the token-budget formula entirely |
+| Skill instructions alone **cannot guarantee** safe behaviour | [OWASP Prompt Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Prompt_Injection_Prevention_Cheat_Sheet.html) · [NIST AI RMF Generative AI Profile](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence) | Layered rules, then **measured** them |
+| LLM-as-judge agrees with humans only **~85%** of the time | [Judging the Judges (arXiv:2306.05685)](https://arxiv.org/abs/2306.05685) | Evaluation uses **deterministic assertions**, never a judge |
+
+**Why this isn't prompt engineering:** chasing phrasing is not a lever. The measurable
+wins are in clarification, grounding, and not adding constraints the user never asked for.
+
+---
+
+## Compared to alternatives
+
+| Approach | Asks clarifying questions? | Reads your code? | Verified? |
+|---|---|---|---|
+| **Just asking your agent** | Sometimes | Yes | No |
+| **Hand-writing a detailed prompt** | No | No | No |
+| **Cursor rules / CLAUDE.md** | No | Yes | No |
+| **Prompt Compiler** | **Yes, and stops** | Yes, anchored | Yes, measured |
+
+The honest comparison is the first row. A hand-written detailed prompt already gets you
+grounding — what Prompt Compiler adds is knowing **which questions matter before you
+start**, plus catching the ones you didn't think to ask.
+
+That advantage is not yet benchmarked. See [Limitations](#honest-limitations).
+
+---
+
 ## Speaks your language
 
-Write to it in Tamil, Hindi, Spanish, or a romanized mix of any of them — the way you
-actually type.
+Write to it the way you actually type — including romanized script and mixed-language
+technical terms. Proven on **Tamil**; other languages follow the same rules but are
+untested (see [Limitations](#honest-limitations)).
 
 > `என் வணிகத்திற்கு ஒரு login page வேணும். email/password use பண்ணணும், மூன்று தவறு attempt பிறகு lock.`
 
@@ -196,6 +263,58 @@ Run it yourself:
 powershell -File evals/fixtures.ps1
 powershell -File evals/check.ps1 -ResultsDir evals/results-v2
 ```
+
+---
+
+## FAQ
+
+**Do I still need to write prompts by hand?**
+No — that's the point. You describe the task, you answer two or three questions, you get
+the prompt.
+
+**Will it start editing my code?**
+No. It writes the prompt and stops. You approve that prompt before anything runs.
+
+**What if I disagree with a question it asks?**
+Answer differently, or say "not sure — you choose" and it recommends. There's no wrong
+answer, and it won't re-ask.
+
+**Does it need OpenAI or Anthropic API keys?**
+No. No backend, no dependencies, no paid service.
+
+**Why does it ask so many questions on a simple request?**
+It shouldn't, and that's a tested rule. If it does, that's a bug — [file it](CONTRIBUTING.md).
+
+**Can I use it with Cursor or Codex?**
+Yes. The compiled prompt is host-agnostic; it's just text.
+
+**Does it work outside software?**
+The design is domain-agnostic. The shipped defaults target agents inside a codebase —
+file anchoring and path citing are tuned for that. A chat AI with no file access wants
+inline code instead.
+
+**Is this prompt engineering?**
+No. Published measurements found a **45% spread** between the best and worst phrasing of
+the same request, unpredictable and non-transferable across models
+([arXiv:2406.10248](https://arxiv.org/abs/2406.10248)). Chasing phrasing is not a lever.
+Asking the right questions is.
+
+**How is this different from just asking the AI to write a better prompt?**
+Because it doesn't write "better" prompts — it refuses to guess. It reads your codebase,
+and when a decision would change the deliverable, it stops and asks. A prompt writer
+optimises words; this one resolves ambiguity.
+
+---
+
+## Troubleshooting
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| It didn't fire on a prompt request | The description didn't match the query | Invoke `/prompt-compiler` explicitly |
+| It used the wrong project | Anchor resolved to the working directory, not your named target | Check `git rev-parse --show-toplevel`; name the project in your request |
+| It ignored your `.agents/` file | `project_root` doesn't match the anchored repo — correct behaviour | Fix `project_root` in the file |
+| It produced a long templated prompt | Ceiling failure — should add substance, not scaffolding | [File it](CONTRIBUTING.md); see `CHANGELOG` 0.1.1 |
+| It compiled instead of asking | Hard-stop failure — the defect found and fixed in 0.1.4 | [File it](CONTRIBUTING.md); see `CHANGELOG` 0.1.4 |
 
 ---
 
