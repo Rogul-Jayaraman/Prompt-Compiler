@@ -1,0 +1,110 @@
+### S06
+EFFORT: targeted
+ASKED: yes
+உங்கள் கோரிக்கை புரிந்து விட்டேன் — email/password login, மூன்று தவறு attempt பிறகு lock, உங்கள் Node.js + Express project-ல் சேர்த்து.
+
+உங்கள் project இந்த session-ல் திறக்கப்படவில்லை, அதனால் நான் code-ஐ பார்க்க முடியவில்லை.
+
+**1 · Users இப்போது எங்கே உள்ளார்கள்?**
+Login செய்வதற்கு ஒரு user list தேவை. ஏற்கனவே ஒரு database table வைத்திருந்தால், அதைப் பயன்படுத்தலாம். இல்லையா?
+- ஏற்கனவே ஒரு database இருக்கு
+- இல்லை, இதுவே முதல் database
+- **தெரியாது — நீங்கள் சிபாரிசு செய்யவும்**
+
+**2 · Password மறக்கும்போது என்னா?**
+பெரும்பாலான login pages-ல் "password reset" இருக்கும். இது வேண்டுமா?
+- ஆம், வேண்டும்
+- இல்லை, இப்போதில்லை
+- **தெரியாது — நீங்கள் சிபாரிசு செய்யவும்**
+
+**என் பரிந்துரை:** முதல் கேள்விக்கு, project-ல் ஏற்கனவே database இருந்தால் அதைத்தான் பயன்படுத்துங்கள்.
+
+### S07
+EFFORT: targeted
+ASKED: yes
+Two things before I write this one.
+
+First, what I found in the repository. There is a `.agents/prompt-compiler/project.md` file here, but its `project_root` points at a different project (`.../projects/alpha-shop`), so I ignored it completely - nothing below comes from it. What I actually verified:
+
+- `package.json` - name `beta-portal`, version `2.1.0`, `"type": "module"`, scripts `test` -> `node --test` and `dev` -> `node src/server.js`. No dependencies are declared.
+- `src/auth/session.js` - exports `signToken` and `verifyToken`; JWT bearer tokens rather than cookies.
+- `src/config.js` - reads `DATABASE_URL` and `SESSION_SECRET` from environment variables.
+- `src/server.js` is the entry point named by the `dev` script, but it is not in the current tree.
+
+**1 - By "login form", do you mean a page in a browser, or an endpoint the app responds to?**
+These are different pieces of work. beta-portal has no HTML, templates, or frontend anywhere.
+- An HTML page with email and password fields, served by the app.
+- An endpoint that accepts email and password and returns a token.
+- Something else - describe it.
+
+**2 - Where should the app check the email and password against?**
+There is no user table, user model, or sign-in code anywhere in the repository today - only the token helpers and the `DATABASE_URL` setting.
+- Create a minimal user store inside this project.
+- Check against a database or service that lives outside this repository.
+- Not sure - you choose.
+
+My suggestion: an endpoint (question 1), and a minimal user store inside this project (question 2). Say "you choose" on either and I'll go with that.
+
+### S08
+EFFORT: targeted
+ASKED: yes
+You asked me to tell you what the latest version actually is. I can't verify that in this session - I have no way to confirm the current release of any package, and I won't state a version number I can't back.
+
+**1 - Which project, and which database driver?**
+You said "this project", but no project is open in our session.
+- Point me at the folder.
+- Tell me the agent you'll send this to already has the repository open.
+
+**2 - If the newest version is a big jump that breaks existing code, do you want it anyway?**
+- Move to the newest version even if it needs follow-up fixes.
+- Move to the newest version that keeps the current code working.
+- Not sure - you choose.
+
+My suggestion: the second option, for a project I haven't been able to look at.
+
+### S09
+EFFORT: targeted
+ASKED: no
+--- COMPILED PROMPT BEGIN ---
+Add a health-check endpoint to beta-portal, and write a README explaining how to run it locally.
+
+Context from this repository:
+- `package.json` - name `beta-portal`, version `2.1.0`, `"type": "module"`, scripts `test` -> `node --test` and `dev` -> `node src/server.js`. No dependencies are declared.
+- Existing code: `src/config.js` and `src/auth/session.js`. Both use CommonJS `module.exports`, while `package.json` declares ESM.
+
+Workstream 1 - health-check endpoint
+- Add an HTTP endpoint reporting that the service is up, following the routing and handler conventions already used in this repository.
+- Return HTTP 200 with a small body, e.g. `{"status":"ok"}`.
+- The `dev` script runs `node src/server.js`, but `src/server.js` is not present in the current tree. Do not invent a server file or add a framework to hang the endpoint on. If no HTTP entry point exists, report that, say what is missing, and stop rather than working around it.
+
+Workstream 2 - README
+- Create `README.md` at the repository root.
+- Explain how to run it locally: install dependencies, then `npm run dev`, and `npm test` for the project's tests (`node --test`).
+- Document the environment variables read in `src/config.js`: `DATABASE_URL` and `SESSION_SECRET`. Name the variables; do not write real values into the file.
+- If `src/server.js` is still absent, say plainly that the documented run command points at a file that is not present.
+
+Verify: `npm test` passes.
+--- COMPILED PROMPT END ---
+
+### S10
+EFFORT: light
+ASKED: yes
+Happy to help with this. There's no project open in our session, so I'm starting from a blank page. None of them need any technical knowledge from you.
+
+**1 - When a customer books an appointment, what should happen next?**
+- Customers pick an open slot themselves and it's booked straight away.
+- Customers send a request and you confirm it before it's fixed in your calendar.
+- Not sure - you choose.
+
+**2 - Do customers pay when they book?**
+- They pay at the salon - the site only handles the booking.
+- They pay online when they book.
+- A deposit online, the rest at the salon.
+- Not sure - you choose.
+
+**3 - How should this actually get built?**
+- A coding agent builds and hosts a custom site.
+- You sign up for an existing booking service made for salons.
+- Not sure - you choose.
+
+My suggestion: customers request a slot and you confirm it, payment at the salon, and an existing salon booking service rather than a custom build. Tell me what you think and I'll turn it into one prompt you can hand over.

@@ -68,6 +68,14 @@ Weigh evidence. Detect conflicts between requirements.
 
 **If any material decision is unresolved, stop and ask.** Do not compile the affected decision as though the answer were known.
 
+**Unresolved unknowns are as much a trigger as conflicts are.** Two models in evaluation compiled straight past "add a login form to an app with no user store and no server" by writing *if there is no user store, report that instead of inventing.* That is the wrong move: it hands the destination agent a prompt built on a guess and pushes the cost of the guess to the far end, where it is harder to see and easier to miss.
+
+Ask before compiling when you find yourself reaching for any of these:
+- "I'll assume…"
+- "If there is no X, report that instead" (in a prompt)
+- "Reuse the existing Y" when no Y was found
+- Any requirement that would change the shape of the deliverable
+
 Material means: two competent people could reasonably answer it differently **and** the deliverables would differ as a result. Both halves required. Disagreement about trivia is not material.
 
 Ask every blocking question **together**, in plain language, with a recommendation. Always allow "I'm not sure — you choose." Before asking, re-read the request once and list *every* pair of requirements that cannot both hold — the second conflict is usually the one you miss.

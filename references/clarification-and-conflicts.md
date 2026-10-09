@@ -58,6 +58,7 @@ Ask when:
 
 - Requirements contradict each other.
 - A missing decision would materially change the outcome.
+- **Something the task needs does not exist and you could not find it.** A missing user store, no server entry point, no config file — ask where it is, or whether to create it. Do not write "if it does not exist, report that" into a prompt. That defers a guess you could have resolved in one message, and hides it from the user.
 - A consequential preference cannot be inferred reliably.
 - A critical uncertainty cannot be resolved with available evidence.
 - The anchor is wrong, or facts point outside the anchored project.

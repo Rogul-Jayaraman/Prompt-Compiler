@@ -1,0 +1,106 @@
+### S06
+EFFORT: targeted
+ASKED: yes
+இந்த தருணத்தில் எந்த project-ஐயும் என்னால் பார்க்க முடியவில்லை (context-ல் எந்த repository-யும் இல்லை), எனவே உங்கள் கோரிக்கையிலிருந்து மட்டுமே வேலை செய்கிறேன்.
+
+**1 · Users எங்கிருந்து வருவார்கள்?**
+Login செய்ய ஒரு user list தேவை. உங்கள் Node.js + Express project-ல் ஏற்கனவே ஒரு database அல்லது user table இருக்கிறதா?
+- ஏற்கனவே ஒரு database இருக்கு
+- இல்லை, புதிதாக உருவாக்க வேண்டும்
+- **தெரியாது — நீங்கள் முடிவு செய்யுங்கள்**
+
+**2 · மூன்று தவறான attempt-க்குப் பிறகு account எவ்வளவு நேரம் lock ஆக வேண்டும்?**
+- 15 நிமிடம்
+- 1 மணி நேரம்
+- Admin unlock செய்யும் வரை (நிரந்தரமாக)
+- **தெரியாது — நீங்கள் முடிவு செய்யுங்கள்**
+
+**3 · Password மறந்துவிட்டால் மீட்டெடுக்கும் வசதி இப்போது வேண்டுமா?**
+- ஆம், வேண்டும்
+- இல்லை, இப்போதைக்கு வேண்டாம்
+- **தெரியாது — நீங்கள் முடிவு செய்யுங்கள்**
+
+**என் பரிந்துரை:** ஏற்கனவே user table இருந்தால் அதையே பயன்படுத்துவோம், இல்லையென்றால் ஒரு சிறிய users table உருவாக்குவோம்.
+
+### S07
+EFFORT: targeted
+ASKED: no
+--- COMPILED PROMPT BEGIN ---
+Add a login page to the beta-portal project in this repository.
+
+Context
+- beta-portal is a Node.js application. Authentication uses JWT bearer tokens: src/auth/session.js exports signToken and verifyToken.
+- Configuration comes from environment variables in src/config.js (DATABASE_URL and SESSION_SECRET).
+- The dev script in package.json points to src/server.js, which is not present in the repository.
+
+Deliverable
+- A login page at /login with email and password fields.
+- On submit, verify the credentials and, on success, issue a token using the existing signToken helper.
+
+Constraints
+- Use the project's existing bearer-token authentication.
+- Do not add sign-up, social login, or password reset in this change.
+
+If there is no HTTP server entry point or no user store to check credentials against, report that instead of inventing a new architecture.
+
+Verify with `npm test` (the test script runs node --test).
+--- COMPILED PROMPT END ---
+Note: `.agents/prompt-compiler/project.md` describes a different project and is out of date; I ignored it.
+
+### S08
+EFFORT: targeted
+ASKED: no
+--- COMPILED PROMPT BEGIN ---
+Upgrade the database driver used by this project to its latest stable version.
+
+- Identify which database driver the project currently uses and the version installed.
+- Find the latest stable version of that driver from its official documentation or release notes. Do not rely on memory or an unverified number.
+- Upgrade to that version and apply any breaking-change or migration steps.
+- Run the project's existing test command afterwards.
+- Report the before and after versions, the commands run, and anything that could not be completed.
+--- COMPILED PROMPT END ---
+Note: I could not verify what the latest version actually is. No project was detected in context.
+
+### S09
+EFFORT: targeted
+ASKED: no
+--- COMPILED PROMPT BEGIN ---
+Two tasks for the beta-portal project in this repository.
+
+Workstream 1 - Health-check endpoint
+Add a health-check endpoint to the app, served at /health, returning HTTP 200 with a small status payload. Match the project's existing route and response conventions.
+
+Workstream 2 - README (write after workstream 1 so the run steps are accurate)
+Add README.md at the repository root explaining how to run the project locally:
+- Prerequisites: Node.js; install dependencies with `npm install`.
+- Start locally: `npm run dev`.
+- Tests: `npm test` (runs `node --test`).
+Run each documented command before writing it.
+
+Report the files added or changed, and any command that could not be verified.
+--- COMPILED PROMPT END ---
+Note: `.agents/prompt-compiler/project.md` describes a different project; I ignored it.
+
+### S10
+EFFORT: thorough
+ASKED: yes
+Nothing here is technical, and if you're unsure about any of them, just say so and I'll choose.
+
+**1 · What should the website let customers do?**
+- Just see your services and get in touch.
+- Pick a service and a time and send you a booking request.
+- Book and pay online, with the slot confirmed automatically.
+
+I'd suggest the middle option to start. Not sure? Say so and I'll go with it.
+
+**2 · How do you want to manage the bookings when they come in?**
+- An email for each new booking, and you handle them yourself (simplest).
+- A simple page where you can see and manage all the bookings.
+
+I'd suggest email to begin with.
+
+**3 · Do you already have a website or a booking system?**
+- No, this is the first one - build from scratch.
+- Yes, and the new site should work with it.
+
+**My suggestion if you'd rather not decide:** a small site where customers pick a service and a time, you get an email for each booking, and you manage the bookings yourself.

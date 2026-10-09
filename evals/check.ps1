@@ -36,37 +36,49 @@ if (-not $files) { Write-Error "No .out files in $ResultsDir" }
 $rows = @()
 
 foreach ($f in $files) {
-  $base = $f.BaseName                      # e.g. S03__big-pickle
-  $parts = $base -split "__", 2
-  $sid = $parts[0]
-  $mdl = if ($parts.Count -gt 1) { $parts[1] } else { "unknown" }
-  if ($Model -and $mdl -ne $Model) { continue }
+  # A result file may hold one scenario (S03__big-pickle.out) or several,
+  # delimited by '### Sxx' headers (big-pickle.out). Split on the headers.
+  $raw   = Get-Content $f.FullName -Raw -Encoding UTF8   # UTF8 required: S06 is Tamil, and PS 5.1 defaults to ANSI without this
+  $model = ($f.BaseName -replace '^.*__', '') -replace '-b$', ''
 
-  $scen = $rules.$sid
-  if (-not $scen) {
-    Write-Warning "No rules for scenario '$sid' (file $($f.Name)) - skipped"
-    continue
+  $blocks = [regex]::Split($raw, '(?m)^###\s+(S\d{2})\s*$')
+  if ($blocks.Count -lt 3) {
+    $sid = ($f.BaseName -split '__')[0]
+    $blocks = @('', $sid, $raw)
   }
 
-  $text = Get-Content $f.FullName -Raw
+  for ($i = 1; $i -lt $blocks.Count; $i += 2) {
+    $sid  = $blocks[$i].Trim()
+    $text = $blocks[$i + 1]
 
-  foreach ($r in $scen.rules) {
-    $pass = $true
-    $why = ""
-
-    foreach ($p in $r.must) {
-      if ($text -notmatch $p) { $pass = $false; $why = "missing /$p/"; break }
+    $scen = $rules.$sid
+    if (-not $scen) {
+      Write-Warning "No rules for scenario '$sid' in $($f.Name) - skipped"
+      continue
     }
-    if ($pass) {
-      foreach ($p in $r.mustnot) {
-        if ($text -match $p) { $pass = $false; $why = "forbidden /$p/"; break }
+
+    foreach ($r in $scen.rules) {
+      $pass = $true
+      $why  = ""
+
+      foreach ($p in $r.must) {
+        if ($text -notmatch $p) { $pass = $false; $why = "missing /$p/"; break }
       }
-    }
+      if ($pass) {
+        foreach ($p in $r.mustnot) {
+          if ($text -match $p) { $pass = $false; $why = "forbidden /$p/"; break }
+        }
+      }
+      if ($pass -and $r.PSObject.Properties['minlines']) {
+        $n = ($text -split "`n" | Where-Object { $_.Trim() }).Count
+        if ($n -lt [int]$r.minlines) { $pass = $false; $why = "only $n non-empty lines, need $($r.minlines)" }
+      }
 
-    $rows += [pscustomobject]@{
-      Model = $mdl; Scenario = $sid; Name = $scen.name
-      Rule = $r.id; Weight = $r.weight; Desc = $r.desc
-      Result = $(if ($pass) { "PASS" } else { "FAIL" }); Why = $why
+      $rows += [pscustomobject]@{
+        Model = $model; Scenario = $sid; Name = $scen.name
+        Rule = $r.id; Weight = $r.weight; Desc = $r.desc
+        Result = $(if ($pass) { "PASS" } else { "FAIL" }); Why = $why
+      }
     }
   }
 }
@@ -99,14 +111,18 @@ $rows | Group-Object Model | ForEach-Object {
 Write-Output ""
 Write-Output "=== PER RULE ACROSS MODELS ==="
 $rows | Group-Object Rule | Sort-Object Name | ForEach-Object {
-  $g   = $_.Group
-  $n   = ($g | Select-Object -ExpandProperty Model -Unique).Count
-  $ok  = ($g | Where-Object Result -eq "PASS").Count
-  $w   = $g[0].Weight
+  $g    = $_.Group
+  $scen = @($g | Select-Object -ExpandProperty Scenario -Unique)
+  $clean = 0
+  foreach ($s in $scen) {
+    $fails = @($g | Where-Object { $_.Scenario -eq $s -and $_.Result -eq "FAIL" })
+    if ($fails.Count -eq 0) { $clean++ }
+  }
+  $w    = $g[0].Weight
   $desc = $g[0].Desc
-  $tag = if ($w -eq "critical" -and $ok -lt $n) { "  <<< CRITICAL NOT UNIVERSAL" }
-         elseif ($ok -eq $n) { "" } else { "  <- model-sensitive" }
-  Write-Output ("{0,-10} {1,5}/{2}  {3}{4}" -f $_.Name, $ok, $n, $desc, $tag)
+  $tag = if ($w -eq "critical" -and $clean -lt $scen.Count) { "  <<< CRITICAL NOT UNIVERSAL" }
+         elseif ($clean -eq $scen.Count) { "" } else { "  <- model-sensitive" }
+  Write-Output ("{0,-10} {1,3}/{2} scen  {3}{4}" -f $_.Name, $clean, $scen.Count, $desc, $tag)
 }
 
 # ---------- gate ----------
