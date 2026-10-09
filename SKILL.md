@@ -3,7 +3,7 @@ name: prompt-compiler
 description: Compiles a vague, underspecified, or conflicting request into one execution-ready prompt for a coding agent that works in the user's codebase. Anchors to the right project, investigates only when it helps, and asks the small number of questions that actually change the result — each explained in plain language with a recommendation. Use when the user says "write a prompt for", "help me ask an AI to", "compile this request", "turn this into a prompt", or describes a task they want to hand to another AI agent. Also use when a request is too ambiguous to act on and the real need is a well-formed ask. Not for executing the task itself.
 license: MIT
 metadata:
-  version: "0.1.0"
+  version: "0.1.3"
 ---
 
 # Prompt Compiler
@@ -53,6 +53,8 @@ Pick the **minimum sufficient** effort:
 | Thorough | Complex, high-impact, security-sensitive, cross-system, or materially uncertain |
 
 Inspect the anchored project only where it changes the answer. Research externally only when current facts could materially improve it.
+
+**Effort is revisable.** These are labels, not a fixed pipeline. Escalate when new evidence shows the task is larger, riskier, or more uncertain than it looked — a dependency you did not expect, a file that contradicts the README, a security surface. Reduce when it turns out simpler than the first read suggested. If the user stated a preference for depth, that governs.
 
 **Research resolves facts. It cannot resolve preference.** Documentation can explain the trade-offs between two databases; it cannot tell you which one the user wants when both are acceptable and the choice materially changes the task. Factual uncertainty → look it up. Preference → ask.
 
@@ -122,6 +124,7 @@ Load only when the stage is actually reached.
 | `references/policies.md` | On any conflict between rules, or when a boundary is unclear |
 | `references/task-understanding.md` | Extracting intent; any non-English or romanized input |
 | `references/project-discovery.md` | The task depends on a codebase, or you are about to read files |
+| `references/web-research.md` | A current or external fact could change the prompt |
 | `references/clarification-and-conflicts.md` | Before asking anything, or when requirements conflict |
 | `references/prompt-composition.md` | Writing the prompt |
 | `assets/project-template.md` | The user wants a `.agents/prompt-compiler/project.md` file |
