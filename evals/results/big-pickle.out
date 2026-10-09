@@ -46,7 +46,7 @@ Note: this project contains an optional project-context file at `.agents/prompt-
 
 --- COMPILED PROMPT BEGIN ---
 Add a password reset flow to the beta-portal project.
-Repository root: C:\Users\Rogul\pc-eval-fixtures\projects\beta-portal
+Repository root: <EVAL_ROOT>/projects/beta-portal
 All paths below are relative to that root.
 
 Current state (verified in the repository):

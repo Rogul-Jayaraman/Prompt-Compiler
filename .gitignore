@@ -1,0 +1,17 @@
+# Eval fixtures are generated, never committed.
+# They contain deliberately fake credentials used to test secret handling.
+evals/fixtures/
+
+# Local scratch
+*.log
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Python bytecode, in case scripts grow
+__pycache__/
+*.pyc
