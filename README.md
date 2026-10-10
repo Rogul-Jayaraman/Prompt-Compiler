@@ -277,7 +277,7 @@ No. It writes the prompt and stops. You approve that prompt before anything runs
 
 **What if I disagree with a question it asks?**
 Answer differently, or say "not sure — you choose" and it recommends. There's no wrong
-answer, and it won't re-ask.
+answer. Questions come batched in a single message, so one reply covers all of them.
 
 **Does it need OpenAI or Anthropic API keys?**
 No. No backend, no dependencies, no paid service.
